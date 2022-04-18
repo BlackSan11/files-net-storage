@@ -1,4 +1,4 @@
-package org.example;
+package ru.gb.file.net.storage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

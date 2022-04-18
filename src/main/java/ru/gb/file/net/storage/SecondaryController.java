@@ -1,4 +1,4 @@
-package org.example;
+package ru.gb.file.net.storage;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
