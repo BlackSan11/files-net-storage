@@ -22,6 +22,7 @@ public class BasicHandler extends ChannelInboundHandlerAdapter {
     //        channelHandlerContext.writeAndFlush(basicResponse);
     //    });
     //}
+    private String login;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -32,18 +33,21 @@ public class BasicHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) throws Exception {
         BasicRequest request = (BasicRequest) msg;
         System.out.println(request.getType());
-
         if (request instanceof AuthRequest) {
             BasicResponse loginOkResponse = new BasicResponse("login ok");
             channelHandlerContext.writeAndFlush(loginOkResponse);
         } else if (request instanceof GetFileListRequest) {
+            if (login == null) {
+                BasicResponse basicResponse = new BasicResponse("Not auth");
+                channelHandlerContext.writeAndFlush(basicResponse);
+            }
             BasicResponse basicResponse = new BasicResponse("file list....");
             channelHandlerContext.writeAndFlush(basicResponse);
         }
     }
-
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
     }
+
 }
